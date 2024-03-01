@@ -1,4 +1,4 @@
-import express from "express";
+import express, { query } from "express";
 import mongoose from "mongoose";
 
 import dotenv from "dotenv"; // for using env variables
@@ -16,6 +16,26 @@ server.use(express.json());
 server.get("/", (req, res) => {
   res.json({ status: 200, message: "express setup to home route (/)" });
   res.end();
+});
+
+// GET ALL collections from DB
+server.get("/api/devData", async (req, res) => {
+  try {
+    const devDetails = await DevData.find({});
+    res.status(200).json(devDetails);
+  } catch (error) {
+    res.json({ status: 200, message: "express setup to home route (/)" });
+  }
+});
+// GET Specific data Collection from DB
+server.get("/api/devData/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const devDetails = await DevData.findById(id);
+    res.status(200).json(devDetails);
+  } catch (error) {
+    res.json({ status: 200, message: "express setup to home route (/)" });
+  }
 });
 
 // POST
