@@ -4,8 +4,13 @@ import mongoose from "mongoose";
 import dotenv from "dotenv"; // for using env variables
 dotenv.config();
 
+import DevData from "./models/devData.model.js";
+// const DevData = require("./models/devData.model.js");
+
 const server = express();
 const SERVER_PORT = 2024;
+
+server.use(express.json());
 
 // GET REQ
 server.get("/", (req, res) => {
@@ -14,6 +19,17 @@ server.get("/", (req, res) => {
 });
 
 // POST
+server.post("/api/devData", async (req, res) => {
+  // console.log(req.body);
+  // res.send(req.body);
+  try {
+    const devData = await DevData.create(req.body);
+    res.status(200).json(devData);
+  } catch (error) {
+    res.status(500).json({ status: 500, message: error.message });
+  }
+});
+
 // PUT
 // DELETE
 // etc....
