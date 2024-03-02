@@ -10,7 +10,10 @@ import DevData from "./models/devData.model.js";
 const server = express();
 const SERVER_PORT = 2024;
 
+// middleware to parse json data to server
 server.use(express.json());
+// middleware to parse form data to server
+server.use(express.urlencoded({ extended: false }));
 
 // GET REQ
 server.get("/", (req, res) => {
@@ -72,6 +75,23 @@ server.put("/api/devData/:id", async (req, res) => {
 });
 
 // DELETE
+server.delete("/api/devData/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const devDetails = await DevData.findByIdAndDelete(id, req.body);
+
+    if (!devDetails) {
+      return res
+        .status(404)
+        .json({ message: "developer details not found in DB" });
+    }
+    res
+      .status(200)
+      .json({ status: 200, message: "developer details deleted from server" });
+  } catch (error) {
+    res.json({ status: 500, message: error.message });
+  }
+});
 // etc....
 
 // checking the server is connected to DB then we perform our logics
