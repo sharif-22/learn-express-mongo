@@ -51,6 +51,26 @@ server.post("/api/devData", async (req, res) => {
 });
 
 // PUT
+
+// UPDATE(put) Specific data Collection from DB
+server.put("/api/devData/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const devDetails = await DevData.findByIdAndUpdate(id, req.body);
+
+    if (!devDetails) {
+      return res
+        .status(404)
+        .json({ message: "developer details not found in DB" });
+    }
+
+    const updatedDevDetails = await DevData.findById(id);
+    res.status(200).json(updatedDevDetails);
+  } catch (error) {
+    res.json({ status: 500, message: error.message });
+  }
+});
+
 // DELETE
 // etc....
 
