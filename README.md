@@ -19,6 +19,8 @@
 
 - create a folder 📂 called controller then implement all the `req` & `res` logics in controller files with `product.controller.js` nameing convention
 
+[postman documentation](https://documenter.getpostman.com/view/25745755/2sA2xb6Fha)
+
 #### Reference
 
 [FreeCode Camp NodeJS, MongoDB YT video](https://www.youtube.com/watch?v=_7UQPve99r4)
